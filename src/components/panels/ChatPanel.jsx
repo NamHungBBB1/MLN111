@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI } from '@google/genai';
+import ReactMarkdown from 'react-markdown';
 
 export default function ChatPanel() {
   const [messages, setMessages] = useState([
@@ -79,7 +80,13 @@ export default function ChatPanel() {
           {messages.map(msg => (
             <div key={msg.id} className={`msg ${msg.who}`}>
               <span className="msg-label">{msg.who === 'you' ? 'ĐỒNG CHÍ' : 'COMRADE.AI'}</span>
-              {msg.text}
+              {msg.who === 'bot' ? (
+                <div className="markdown-content">
+                  <ReactMarkdown>{msg.text}</ReactMarkdown>
+                </div>
+              ) : (
+                msg.text
+              )}
             </div>
           ))}
           {isLoading && (
