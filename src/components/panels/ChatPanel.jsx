@@ -25,15 +25,15 @@ export default function ChatPanel() {
 
   const handleSend = async (text) => {
     if (!text.trim() || isLoading) return;
-    
+
     // Lấy key từ môi trường Vite
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-    
+
     if (!apiKey) {
       alert("Lỗi: Không tìm thấy VITE_GEMINI_API_KEY trong file .env!");
       return;
     }
-    
+
     setMessages(prev => [...prev, { id: Date.now(), text, who: 'you' }]);
     setInputValue('');
     setIsLoading(true);
@@ -47,7 +47,7 @@ export default function ChatPanel() {
           systemInstruction: knowledge,
         }
       });
-      
+
       setMessages(prev => [...prev, { id: Date.now() + 1, text: response.text, who: 'bot' }]);
     } catch (error) {
       console.error(error);
@@ -68,11 +68,11 @@ export default function ChatPanel() {
   return (
     <div className="tab-panel active">
       <div className="section-label">Phần 05 — Đối thoại thực</div>
-      <h2 className="section-title">Hỏi đáp cùng AI (Gemini)</h2>
-      
+      <h2 className="section-title">Hỏi đáp cùng AI</h2>
+
       <div className="chat-frame">
         <div className="chat-header">
-          <div className="chat-header-title">★ COMRADE.AI — GEMINI 2.5 FLASH</div>
+          <div className="chat-header-title">★ COMRADE.AI</div>
           <div className="chat-header-status"><span className="status-dot"></span>{isLoading ? 'ĐANG TƯ DUY...' : 'ONLINE'}</div>
         </div>
         <div className="chat-body" ref={chatBodyRef}>
@@ -97,9 +97,9 @@ export default function ChatPanel() {
           ))}
         </div>
         <div className="chat-input-row">
-          <input 
-            className="chat-input" 
-            placeholder="Nhập câu hỏi của đồng chí..." 
+          <input
+            className="chat-input"
+            placeholder="Nhập câu hỏi của đồng chí..."
             value={inputValue}
             onChange={e => setInputValue(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter') handleSend(inputValue); }}
