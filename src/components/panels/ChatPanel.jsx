@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { GoogleGenAI } from '@google/genai';
+import Groq from 'groq-sdk';
 import ReactMarkdown from 'react-markdown';
 
 export default function ChatPanel() {
@@ -30,22 +30,25 @@ export default function ChatPanel() {
 
   const handleSend = async (text) => {
     if (!text.trim() || isLoading) return;
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    const apiKey = import.meta.env.VITE_GROQ_API_KEY;
     if (!apiKey) {
-      alert('Lỗi: Không tìm thấy VITE_GEMINI_API_KEY trong file .env!');
+      alert('Lỗi: Không tìm thấy VITE_GROQ_API_KEY trong file .env!');
       return;
     }
     setMessages(prev => [...prev, { id: Date.now(), text, who: 'you' }]);
     setInputValue('');
     setIsLoading(true);
     try {
-      const ai = new GoogleGenAI({ apiKey });
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: text,
-        config: { systemInstruction: knowledge },
+      const groq = new Groq({ apiKey, dangerouslyAllowBrowser: true });
+      const response = await groq.chat.completions.create({
+        model: 'llama-3.1-8b-instant',
+        messages: [
+          { role: 'system', content: knowledge },
+          { role: 'user', content: text },
+        ],
       });
-      setMessages(prev => [...prev, { id: Date.now() + 1, text: response.text, who: 'bot' }]);
+      const botText = response.choices[0].message.content;
+      setMessages(prev => [...prev, { id: Date.now() + 1, text: botText, who: 'bot' }]);
     } catch (error) {
       console.error(error);
       setMessages(prev => [
