@@ -12,7 +12,7 @@ export default function Hero() {
       </div>
       <div className="hero-content">
         <div className="hero-meta">
-          <span>★ NHÓM 5 ★ CHƯƠNG III ★ MỤC IV ★ TRIẾT HỌC MÁC-LÊNIN</span>
+          <span>★ NHÓM 7 ★ CHƯƠNG III ★ MỤC IV ★ TRIẾT HỌC MÁC-LÊNIN</span>
           <span>NO. 1859 — 2026</span>
         </div>
         <h1 className="hero-title">
