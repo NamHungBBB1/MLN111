@@ -4,6 +4,7 @@ export default function Tabs({ activeTab, setActiveTab }) {
   const tabs = [
     { id: 'content', num: '01–04', label: 'Nội dung' },
     { id: 'ai',      num: '05',    label: 'Hỏi AI' },
+    { id: 'game',    num: '06',    label: 'Mini Game' },
   ];
 
   return (

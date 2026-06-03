@@ -74,57 +74,8 @@ body::after {
 }
 #marx-app * { box-sizing: border-box; }
 
-/* ── Geometric Decorations ───────────────────────────────── */
-.geo-bg { position: absolute; pointer-events: none; z-index: 0; }
+/* ── Typographic Watermarks ──────────────────────────────── */
 
-.geo-circle {
-  width: 360px; height: 360px; border-radius: 50%;
-  background: var(--red);
-  top: -110px; right: -110px;
-  opacity: 0.9;
-}
-.geo-circle::after {
-  content: '';
-  position: absolute;
-  inset: 20px; border-radius: 50%;
-  border: 3px solid rgba(255,255,255,0.15);
-}
-
-.geo-bar {
-  width: 200px; height: 10px;
-  background: var(--ink);
-  top: 215px; right: 36px;
-  transform: rotate(-15deg);
-}
-.geo-bar::after {
-  content: '';
-  position: absolute;
-  width: 100%; height: 3px;
-  background: var(--red);
-  top: 15px; left: 0;
-}
-
-.geo-square {
-  width: 72px; height: 72px;
-  background: var(--ink);
-  bottom: 55px; left: 22px;
-  transform: rotate(12deg);
-}
-.geo-square::after {
-  content: '';
-  position: absolute;
-  inset: 8px;
-  border: 2px solid var(--red);
-}
-
-.geo-triangle {
-  width: 0; height: 0;
-  border-left: 58px solid transparent;
-  border-right: 58px solid transparent;
-  border-bottom: 104px solid var(--red);
-  bottom: 130px; right: 28px;
-  opacity: 0.78;
-}
 
 /* ── Hero ────────────────────────────────────────────────── */
 .hero {
@@ -956,7 +907,7 @@ body::after {
 
 /* ── Footer / Stamp ──────────────────────────────────────── */
 .footer-stamp {
-  margin: 48px 36px 32px;
+  margin: 48px 0 0;
   padding: 22px 24px;
   border-top: 4px solid var(--ink);
   border-bottom: 4px solid var(--ink);
