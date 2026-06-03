@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" width="400" height="560">
+  <defs>
+    <!-- Noise texture -->
+    <filter id="grain" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+      <feBlend in="SourceGraphic" in2="grayNoise" mode="multiply"/>
+    </filter>
+    <filter id="roughen">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="2" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F2E8CE;stop-opacity:0"/>
+      <stop offset="40%" style="stop-color:#F2E8CE;stop-opacity:0.1"/>
+      <stop offset="100%" style="stop-color:#F2E8CE;stop-opacity:0.9"/>
+    </linearGradient>
+    <mask id="fadeMask">
+      <rect width="400" height="560" fill="url(#bgGrad)"/>
+    </mask>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="560" fill="#F2E8CE"/>
+
+  <!-- Constructivist geometric composition -->
+
+  <!-- Large red circle — sun/halo motif -->
+  <circle cx="200" cy="150" r="130" fill="#C8102E" opacity="0.12"/>
+  <circle cx="200" cy="150" r="110" fill="none" stroke="#C8102E" stroke-width="3" opacity="0.3"/>
+
+  <!-- Silhouette — head shape -->
+  <ellipse cx="200" cy="140" rx="82" ry="95" fill="#160E08"/>
+
+  <!-- Beard -->
+  <path d="M 130 195 Q 145 260 170 300 Q 185 330 200 345 Q 215 330 230 300 Q 255 260 270 195 Q 250 220 230 235 Q 215 245 200 248 Q 185 245 170 235 Q 150 220 130 195Z" fill="#160E08"/>
+
+  <!-- Hair on sides -->
+  <path d="M 118 145 Q 108 170 115 200 Q 118 190 125 185 L 128 155Z" fill="#160E08"/>
+  <path d="M 282 145 Q 292 170 285 200 Q 282 190 275 185 L 272 155Z" fill="#160E08"/>
+
+  <!-- Hair on top — bushy -->
+  <path d="M 135 100 Q 140 68 160 55 Q 180 42 200 40 Q 220 42 240 55 Q 260 68 265 100 Q 250 85 230 78 Q 215 73 200 72 Q 185 73 170 78 Q 150 85 135 100Z" fill="#160E08"/>
+
+  <!-- Forehead lighter area — face -->
+  <ellipse cx="200" cy="145" rx="70" ry="75" fill="#D4A878"/>
+
+  <!-- Eyes — bold graphic marks -->
+  <ellipse cx="175" cy="135" rx="12" ry="8" fill="#160E08"/>
+  <ellipse cx="225" cy="135" rx="12" ry="8" fill="#160E08"/>
+  <!-- Eye highlights -->
+  <ellipse cx="178" cy="133" rx="3" ry="2" fill="#F2E8CE" opacity="0.6"/>
+  <ellipse cx="228" cy="133" rx="3" ry="2" fill="#F2E8CE" opacity="0.6"/>
+
+  <!-- Eyebrows — heavy and expressive -->
+  <path d="M 160 120 Q 175 113 192 117" stroke="#160E08" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M 208 117 Q 225 113 240 120" stroke="#160E08" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+  <!-- Nose -->
+  <path d="M 195 145 Q 188 162 192 175 Q 196 180 200 180 Q 204 180 208 175 Q 212 162 205 145" fill="#BF8B60" stroke="#A06840" stroke-width="1"/>
+
+  <!-- Mustache — thick and distinctive -->
+  <path d="M 165 188 Q 183 195 200 192 Q 217 195 235 188 Q 225 205 210 210 Q 200 212 190 210 Q 175 205 165 188Z" fill="#1A0A04"/>
+
+  <!-- Beard (lighter layer) -->
+  <path d="M 148 205 Q 155 225 165 250 Q 175 275 185 295 Q 192 310 200 315 Q 208 310 215 295 Q 225 275 235 250 Q 245 225 252 205 Q 235 218 215 225 Q 207 227 200 228 Q 193 227 185 225 Q 165 218 148 205Z" fill="#2A100A" opacity="0.9"/>
+
+  <!-- Collar / Jacket -->
+  <path d="M 100 420 L 130 310 Q 160 290 200 285 Q 240 290 270 310 L 300 420Z" fill="#160E08"/>
+  <!-- Coat lapels -->
+  <path d="M 130 310 Q 165 330 200 335 L 200 400 L 100 420Z" fill="#2A1810"/>
+  <path d="M 270 310 Q 235 330 200 335 L 200 400 L 300 420Z" fill="#241410"/>
+
+  <!-- Shirt / tie area -->
+  <path d="M 185 295 Q 195 305 200 310 Q 205 305 215 295 L 215 340 L 200 360 L 185 340Z" fill="#F2E8CE" opacity="0.9"/>
+  <!-- Tie knot -->
+  <path d="M 195 308 Q 200 305 205 308 L 210 330 L 200 345 L 190 330Z" fill="#C8102E"/>
+
+  <!-- Red star emblem on jacket -->
+  <polygon points="200,375 204,388 218,388 207,396 211,409 200,401 189,409 193,396 182,388 196,388" fill="#C8102E" opacity="0.85"/>
+
+  <!-- Diagonal constructivist lines -->
+  <line x1="0" y1="400" x2="120" y2="260" stroke="#C8102E" stroke-width="2" opacity="0.15"/>
+  <line x1="400" y1="400" x2="280" y2="260" stroke="#C8102E" stroke-width="2" opacity="0.15"/>
+
+  <!-- Text: КАРЛ МАРКС (Karl Marx in Cyrillic) — decorative -->
+  <text x="200" y="510" text-anchor="middle" font-family="'Oswald', sans-serif" font-size="13" font-weight="700" letter-spacing="6" fill="#C8102E" opacity="0.5" text-transform="uppercase">KARL MARX · 1818–1883</text>
+
+  <!-- Grain overlay -->
+  <rect width="400" height="560" fill="#160E08" opacity="0.04" filter="url(#grain)"/>
+
+  <!-- Bottom fade to cream -->
+  <rect width="400" height="560" fill="url(#bgGrad)"/>
+</svg>
