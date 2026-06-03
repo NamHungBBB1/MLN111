@@ -40,12 +40,24 @@ export default function ChatPanel() {
     setIsLoading(true);
     try {
       const groq = new Groq({ apiKey, dangerouslyAllowBrowser: true });
+      const systemPrompt = `Bạn là COMRADE.AI — trợ lý học tập chuyên về bài học "Tồn tại xã hội và Ý thức xã hội" (Triết học Mác-Lênin, Chương III, Mục IV).
+
+NGUYÊN TẮC BẮT BUỘC:
+- Chỉ trả lời các câu hỏi liên quan đến nội dung bài học này.
+- Nếu câu hỏi không liên quan (thời tiết, nấu ăn, lập trình, tin tức, v.v.), hãy lịch sự từ chối và nhắc người dùng hỏi về bài học.
+- Không làm thơ, không viết code, không dịch thuật ngoài phạm vi bài học.
+- Trả lời bằng tiếng Việt, súc tích, dùng "Đồng chí" khi xưng hô.
+
+NỘI DUNG BÀI HỌC:
+${knowledge}`;
       const response = await groq.chat.completions.create({
         model: 'llama-3.1-8b-instant',
         messages: [
-          { role: 'system', content: knowledge },
+          { role: 'system', content: systemPrompt },
           { role: 'user', content: text },
         ],
+        max_tokens: 1024,
+        temperature: 0.4,
       });
       const botText = response.choices[0].message.content;
       setMessages(prev => [...prev, { id: Date.now() + 1, text: botText, who: 'bot' }]);
