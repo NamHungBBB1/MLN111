@@ -9,6 +9,35 @@
 
 ---
 
+## Color
+
+> Tham khảo: [Claude Cookbook — Coding & Prompting for Frontend Aesthetics](https://platform.claude.com/cookbook/coding-prompting-for-frontend-aesthetics)
+
+### Nguyên tắc áp dụng trong dự án
+
+- **Commit to a cohesive aesthetic** — Toàn bộ UI dùng một bộ CSS variables duy nhất, không pha trộn màu tuỳ tiện.
+- **Dominant colors with sharp accents** — Màu nền cream/ink chiếm phần lớn, đỏ (`#C8102E`) chỉ xuất hiện tại điểm nhấn (border, badge, accent) để tạo tương phản mạnh.
+- **Lấy cảm hứng từ cultural aesthetics** — Hệ màu mô phỏng tờ báo tuyên truyền Liên Xô (Soviet Agitprop Broadside): giấy cũ, mực in, đỏ cờ.
+- **Tránh palette phân bổ đều** — Không dùng màu gradient tím trên nền trắng; thay vào đó là contrast cao, in ấn, editorial.
+
+### CSS Variables (hệ màu thực tế)
+
+```css
+--red:        #C8102E   /* Đỏ cờ — accent chính */
+--red-dark:   #8B0A1F   /* Đỏ sậm — hover, border */
+--red-faint:  rgba(200,16,46,0.07)
+--cream:      #F2E8CE   /* Giấy cũ — nền card */
+--cream-dark: #E2D3AE
+--ink:        #160E08   /* Mực in — text, border */
+--ink-mid:    rgba(22,14,8,0.5)
+--ink-faint:  rgba(22,14,8,0.07)
+--paper:      #EAE0C4   /* Giấy — nền section */
+--paper-dark: #D8CAA4
+--gold:       #A87810   /* Vàng — chi tiết phụ */
+```
+
+---
+
 ## Repositories
 
 ### `Citedy/game-sounds`
