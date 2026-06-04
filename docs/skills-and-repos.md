@@ -38,6 +38,40 @@
 
 ---
 
+## Animation Libraries
+
+### GSAP + ScrollTrigger
+- **URL:** [gsap.com](https://gsap.com) · `npm install gsap`
+- **Dùng để:** Scroll-triggered entrance animations trong `ContentPage` và `ChatPanel`
+
+| Element | Animation |
+|---|---|
+| `.section-label` | Blade-slash từ trái (`x: -60, power3.out`) |
+| `.section-title` | Slam xuống + skew snap (`y: 45, skewX: 4, power4.out`) |
+| `.ghost-num` | Parallax scrub (`y: -90, scrub: 2`) |
+| `.concept-card` | Stagger rise (`y: 70, back.out(1.4), stagger: 0.18`) |
+| `.principle-box` | RotateY fan-in (`rotateY: 25, back.out(1.6), stagger: 0.14`) |
+| `.flow-diagram` | Slide unit từ trái + scale pop từng box |
+| `.evidence-item` | Blade-slash trái stagger (`x: -70, stagger: 0.1`) |
+| `.flash-wrap` | Cascade scale appear (`scale: 0.92, stagger: 0.07`) |
+
+### Framer Motion
+- **URL:** [framer.com/motion](https://www.framer.com/motion) · `npm install framer-motion`
+- **Dùng để:** Screen transitions trong `GamePanel` (mini game)
+- **Pattern:** `AnimatePresence mode="wait"` + `motion.div` bọc từng screen
+
+```js
+const screenAnim = {
+  initial: { opacity: 0, y: 28, scale: 0.97 },
+  animate: { opacity: 1, y: 0,  scale: 1,    transition: { duration: 0.38 } },
+  exit:    { opacity: 0, y: -20, scale: 0.97, transition: { duration: 0.22 } },
+};
+```
+
+Áp dụng cho: `intro → stage (×3) → path → events → career → ending`
+
+---
+
 ## Repositories
 
 ### `Citedy/game-sounds`
