@@ -55,9 +55,11 @@ class SoundManager {
   play(name) {
     if (this.muted || !this._sfx[name]) return;
     try {
-      const clone = this._sfx[name].cloneNode();
-      clone.volume = 0.6;
-      clone.play().catch(() => {});
+      const audio = this._sfx[name];
+      audio.pause();
+      audio.currentTime = 0;
+      audio.volume = name === 'stageResult' ? 0.3 : 0.6;
+      audio.play().catch(() => {});
     } catch (_) {}
   }
 
