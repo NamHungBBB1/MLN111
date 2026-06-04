@@ -31,7 +31,7 @@ function App() {
 
   const handleTabChange = (newTab) => {
     if (newTab === activeTab) return;
-    if (activeTab === 'game') soundManager.stopAll();
+    if (activeTab === 'game') soundManager.pauseBg();
     if (newTab === 'game')    soundManager.resumeBg();
     setActiveTab(newTab);
   };
