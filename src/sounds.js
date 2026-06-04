@@ -2,15 +2,16 @@ const BASE = 'https://raw.githubusercontent.com/citedy/game-sounds/main/sounds';
 
 const URLS = {
   bg:         '/maestro.mp3',
-  goodEnding: `${BASE}/final-fantasy/task-acknowledge/finale.mp3`,
-  badEnding:  `${BASE}/game-of-thrones/task-complete/rains-of-castamere.mp3`,
+  goodEnding: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Achaidh%20Cheide.mp3',
+  badEnding:  'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Long%20Road%20Ahead.mp3',
 };
 
 class SoundManager {
   constructor() {
     this.muted    = false;
-    this.bgActive = false; // true sau khi user bấm BẮT ĐẦU HÀNH TRÌNH
+    this.bgActive = false;
     this._ctx     = null;
+    this._sfx     = null; // strong ref — prevents GC killing mid-play audio
     this.bg       = new Audio(URLS.bg);
     this.bg.loop   = true;
     this.bg.volume = 0.05;
@@ -43,10 +44,16 @@ class SoundManager {
   play(name) {
     if (this.muted || !URLS[name]) return;
     try {
+      if (this._sfx) { this._sfx.pause(); this._sfx = null; }
       const a = new Audio(URLS[name]);
       a.volume = 0.2;
       a.play().catch(() => {});
+      this._sfx = a; // hold reference — prevents browser GC
     } catch (_) {}
+  }
+
+  stopSfx() {
+    if (this._sfx) { this._sfx.pause(); this._sfx = null; }
   }
 
   startBg() {
