@@ -8,22 +8,6 @@ import ContentPage from './components/panels/ContentPage';
 import ChatPanel from './components/panels/ChatPanel';
 import GamePanel from './components/panels/GamePanel';
 
-function useScrollReveal(activeTab) {
-  useEffect(() => {
-    const els = Array.from(document.querySelectorAll('.reveal, .reveal-left'));
-    const show = (el) => { el.classList.add('visible'); io.unobserve(el); };
-    const io = new IntersectionObserver(
-      entries => entries.forEach(e => { if (e.isIntersecting) show(e.target); }),
-      { threshold: 0 }
-    );
-    els.forEach(el => io.observe(el));
-    els.forEach(el => {
-      const r = el.getBoundingClientRect();
-      if (r.top < window.innerHeight && r.bottom > 0) show(el);
-    });
-    return () => io.disconnect();
-  }, [activeTab]);
-}
 
 function useReadingProgress() {
   useEffect(() => {
@@ -64,7 +48,6 @@ function App() {
     }
   }, [activeTab]);
 
-  useScrollReveal(activeTab);
   useReadingProgress();
 
   return (

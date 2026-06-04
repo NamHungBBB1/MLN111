@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { soundManager } from '../../sounds';
+
+const screenAnim = {
+  initial: { opacity: 0, y: 28, scale: 0.97 },
+  animate: { opacity: 1, y: 0,  scale: 1,    transition: { duration: 0.38, ease: [0.25, 0.46, 0.45, 0.94] } },
+  exit:    { opacity: 0, y: -20, scale: 0.97, transition: { duration: 0.22, ease: 'easeIn' } },
+};
 
 // ── CONFIG ────────────────────────────────────────────────
 const STATS_META = {
@@ -611,29 +618,56 @@ export default function GamePanel() {
         <button className="g-mute-btn" onClick={toggleMute} title={muted ? 'Bật nhạc' : 'Tắt nhạc'}>
           {muted ? '🔇' : '🔊'}
         </button>
-        {screen !== 'intro' && screen !== 'ending' && (
-          <>
-            <Timeline phase={phaseForTimeline} stageIdx={stageIdx} />
-            <div className="g-body">
-              <StatBars stats={stats} delta={screen !== 'stage' ? delta : null} />
-              <div className="g-content">
-                {screen === 'stage' && (
-                  <StageScreen
-                    key={stageIdx}
-                    stage={STAGES[stageIdx]}
-                    stats={stats}
-                    onConfirm={handleStageConfirm}
-                  />
-                )}
-                {screen === 'path'   && <PathScreen   stats={stats} onConfirm={handlePathConfirm} />}
-                {screen === 'events' && <EventsScreen stats={stats} onConfirm={handleEventsConfirm} />}
-                {screen === 'career' && <CareerScreen stats={stats} onConfirm={handleCareerConfirm} />}
+        <AnimatePresence mode="wait">
+          {screen === 'intro' && (
+            <motion.div key="intro" {...screenAnim}>
+              <IntroScreen onStart={() => setScreen('stage')} />
+            </motion.div>
+          )}
+
+          {screen === 'ending' && (
+            <motion.div key="ending" {...screenAnim}>
+              <EndingScreen stats={stats} career={career} onRestart={restart} />
+            </motion.div>
+          )}
+
+          {screen !== 'intro' && screen !== 'ending' && (
+            <motion.div key="gameplay" {...screenAnim}>
+              <Timeline phase={phaseForTimeline} stageIdx={stageIdx} />
+              <div className="g-body">
+                <StatBars stats={stats} delta={screen !== 'stage' ? delta : null} />
+                <div className="g-content">
+                  <AnimatePresence mode="wait">
+                    {screen === 'stage' && (
+                      <motion.div key={`stage-${stageIdx}`} {...screenAnim}>
+                        <StageScreen
+                          stage={STAGES[stageIdx]}
+                          stats={stats}
+                          onConfirm={handleStageConfirm}
+                        />
+                      </motion.div>
+                    )}
+                    {screen === 'path' && (
+                      <motion.div key="path" {...screenAnim}>
+                        <PathScreen stats={stats} onConfirm={handlePathConfirm} />
+                      </motion.div>
+                    )}
+                    {screen === 'events' && (
+                      <motion.div key="events" {...screenAnim}>
+                        <EventsScreen stats={stats} onConfirm={handleEventsConfirm} />
+                      </motion.div>
+                    )}
+                    {screen === 'career' && (
+                      <motion.div key="career" {...screenAnim}>
+                        <CareerScreen stats={stats} onConfirm={handleCareerConfirm} />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
-            </div>
-          </>
-        )}
-        {screen === 'intro'  && <IntroScreen onStart={() => setScreen('stage')} />}
-        {screen === 'ending' && <EndingScreen stats={stats} career={career} onRestart={restart} />}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
