@@ -1,10 +1,9 @@
 const BASE = 'https://raw.githubusercontent.com/citedy/game-sounds/main/sounds';
 
 const URLS = {
-  bg:          '/maestro.mp3',
-  stageResult: `${BASE}/zelda/task-complete/secret-discovered.mp3`,
-  goodEnding:  `${BASE}/final-fantasy/task-acknowledge/finale.mp3`,
-  badEnding:   `${BASE}/game-of-thrones/task-complete/rains-of-castamere.mp3`,
+  bg:         '/maestro.mp3',
+  goodEnding: `${BASE}/final-fantasy/task-acknowledge/finale.mp3`,
+  badEnding:  `${BASE}/game-of-thrones/task-complete/rains-of-castamere.mp3`,
 };
 
 class SoundManager {
@@ -13,7 +12,7 @@ class SoundManager {
     this._ctx  = null;
     this.bg    = new Audio(URLS.bg);
     this.bg.loop   = true;
-    this.bg.volume = 0.45;
+    this.bg.volume = 0.2;
     this.bg.preload = 'auto';
   }
 
@@ -44,7 +43,7 @@ class SoundManager {
     if (this.muted || !URLS[name]) return;
     try {
       const a = new Audio(URLS[name]);
-      a.volume = name === 'stageResult' ? 0.3 : 0.6;
+      a.volume = 0.6;
       a.play().catch(() => {});
     } catch (_) {}
   }

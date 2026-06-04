@@ -283,7 +283,6 @@ function StageScreen({ stage, stats, onConfirm }) {
     allFx.forEach(([k, v]) => { d[k] = (d[k] || 0) + v; });
     setDelta(d);
     setDone(true);
-    soundManager.play('stageResult');
   };
 
   return (
