@@ -8,7 +8,7 @@ const STATS_META = {
   social:    { label: 'Quan hệ XH',  short: 'QH', icon: '◈' },
   mindset:   { label: 'Tư duy',      short: 'TD', icon: '◉' },
 };
-const INIT_STATS = { finance: 10, education: 10, tech: 5, social: 10, mindset: 10 };
+const INIT_STATS = { finance: 0, education: 0, tech: 0, social: 0, mindset: 0 };
 const MAX_STAT   = 50;
 const MAX_PICK   = 3;
 
@@ -17,7 +17,7 @@ const STAGES = [
   {
     id: 0, range: '0–5', label: 'TUỔI THƠ',
     title: 'Những năm đầu đời',
-    sub: 'Bạn không chọn nơi mình sinh ra.',
+    sub: 'Liệu bạn có thực sự lựa chọn cuộc đời của mình? Hãy cùng khám phá nhé!',
     pool: [
       { id:'s0a', text:'Gia đình khá giả',        pos:true,  fx:[['finance',5],['social',2]] },
       { id:'s0b', text:'Tiếp xúc Internet sớm',   pos:true,  fx:[['tech',5]] },
@@ -61,57 +61,57 @@ const STAGES = [
 ];
 
 const PATHS = [
-  { id:'p1', text:'Thi Đại Học',      desc:'Con đường học thuật dài hơi',       req:[['education',15]],            fx:[['education',5]] },
+  { id:'p1', text:'Thi Đại Học',      desc:'Con đường học thuật dài hơi',       req:[['education',10]],            fx:[['education',5]] },
   { id:'p2', text:'Học Nghề',         desc:'Kỹ năng thực tiễn, thu nhập sớm',  req:[],                            fx:[['finance',3],['tech',2]] },
-  { id:'p3', text:'Khởi Nghiệp Nhỏ', desc:'Mạo hiểm nhưng tiềm năng cao',     req:[['mindset',15]],              fx:[['finance',2],['mindset',3]] },
-  { id:'p4', text:'Du Học',           desc:'Cơ hội lớn — chi phí cũng lớn',    req:[['education',20],['finance',15]], fx:[['education',10],['social',5]] },
+  { id:'p3', text:'Khởi Nghiệp Nhỏ', desc:'Mạo hiểm nhưng tiềm năng cao',     req:[['mindset',10]],              fx:[['finance',2],['mindset',3]] },
+  { id:'p4', text:'Du Học',           desc:'Cơ hội lớn — chi phí cũng lớn',    req:[['education',15],['finance',5]], fx:[['education',10],['social',5]] },
 ];
 
 const WORLD_EVENTS = [
   {
     id:'e1', title:'COVID-19 — Đại dịch',
     desc:'Thế giới đóng cửa. Bạn có thích nghi được không?',
-    check: s => s.tech >= 15,
-    okText: 'Công nghệ ≥ 15 → Học online thành công',
+    check: s => s.tech >= 8,
+    okText: 'Công nghệ ≥ 8 → Học online thành công',
     noText: 'Công nghệ thấp → Bỏ lỡ năm học',
     okFx: [['education',5]], noFx: [['education',-5]],
   },
   {
     id:'e2', title:'AI Bùng Nổ',
     desc:'Trí tuệ nhân tạo thay đổi mọi ngành nghề.',
-    check: s => s.tech >= 20 && s.mindset >= 20,
-    okText: 'Công nghệ + Tư duy cao → Bắt kịp làn sóng AI',
+    check: s => s.tech >= 18 && s.mindset >= 12,
+    okText: 'Công nghệ ≥ 18 + Tư duy ≥ 12 → Bắt kịp làn sóng AI',
     noText: 'Nền tảng chưa đủ → Khó thích nghi',
     okFx: [['finance',10],['tech',5]], noFx: [['finance',-3]],
   },
   {
     id:'e3', title:'Thực Tập Công Ty Lớn',
     desc:'Cơ hội thực tập tại tập đoàn mở ra.',
-    check: s => s.social >= 15 || s.education >= 20,
-    okText: 'Quan hệ/Giáo dục đủ → Được nhận',
+    check: s => s.social >= 10 || s.education >= 15,
+    okText: 'Quan hệ ≥ 10 hoặc Giáo dục ≥ 15 → Được nhận',
     noText: 'Không đủ điều kiện → Bỏ lỡ cơ hội',
     okFx: [['finance',5],['social',5]], noFx: [],
   },
 ];
 
 const CAREERS = [
-  { id:'c1', text:'Tập Đoàn',    desc:'Ổn định, thu nhập cao',    req:[['education',20],['social',15]],        fx:[['finance',10]] },
-  { id:'c2', text:'Freelancer',  desc:'Tự do, sáng tạo',          req:[['tech',15],['mindset',15]],            fx:[['finance',5],['tech',3]] },
-  { id:'c3', text:'Công Chức',   desc:'Ổn định, ít áp lực',       req:[['education',15]],                      fx:[['social',5]] },
+  { id:'c1', text:'Tập Đoàn',    desc:'Ổn định, thu nhập cao',    req:[['education',18],['social',10]],        fx:[['finance',10]] },
+  { id:'c2', text:'Freelancer',  desc:'Tự do, sáng tạo',          req:[['tech',12],['mindset',10]],            fx:[['finance',5],['tech',3]] },
+  { id:'c3', text:'Công Chức',   desc:'Ổn định, ít áp lực',       req:[['education',10]],                      fx:[['social',5]] },
   { id:'c4', text:'Công Nhân',   desc:'Không yêu cầu điều kiện',  req:[],                                      fx:[['finance',2]] },
-  { id:'c5', text:'Startup AI',  desc:'Rủi ro cao — tiềm năng lớn', req:[['tech',25],['mindset',25],['finance',15]], fx:[['finance',20],['tech',10]] },
+  { id:'c5', text:'Startup AI',  desc:'Rủi ro cao — tiềm năng lớn', req:[['tech',20],['mindset',15],['finance',5]], fx:[['finance',20],['tech',10]] },
 ];
 
 const ENDINGS = [
-  { id:'A', req: s => s.tech >= 25 && s.mindset >= 25,
+  { id:'A', req: s => s.tech >= 25 && s.mindset >= 15,
     title:'Digital Pioneer', role:'AI Engineer',
     color:'var(--red)',
     desc:'Đồng chí đã tận dụng mọi điều kiện để bứt phá. Con đường này không phải ngẫu nhiên — nó được xây dựng từ tồn tại xã hội thuận lợi ngay từ những năm đầu đời.' },
-  { id:'C', req: s => s.social >= 20 && s.mindset >= 15,
+  { id:'C', req: s => s.social >= 15 && s.mindset >= 12,
     title:'Community Leader', role:'Nhà lãnh đạo cộng đồng',
     color:'var(--ink)',
     desc:'Quan hệ xã hội mạnh mẽ mở ra cánh cửa mà tiền bạc không thể mua được. Ý thức hình thành từ tập thể — và tập thể nâng đỡ đồng chí.' },
-  { id:'B', req: s => s.finance >= 15,
+  { id:'B', req: s => s.finance >= 10,
     title:'The Survivor', role:'Người lao động ổn định',
     color:'var(--ink)',
     desc:'Cuộc sống ổn định, không hào nhoáng. Điều kiện vật chất quyết định lựa chọn — và lựa chọn tích lũy thành số phận.' },
@@ -219,7 +219,7 @@ function PathCard({ path, stats, selected, onClick }) {
           Yêu cầu:{' '}
           {path.req.map(([k, v]) => (
             <span key={k} className={`g-req-tag ${stats[k] >= v ? 'met' : 'unmet'}`}>
-              {STATS_META[k].short} ≥ {v}
+              {STATS_META[k].label} ≥ {v} · bạn có: {stats[k]}
             </span>
           ))}
         </div>
