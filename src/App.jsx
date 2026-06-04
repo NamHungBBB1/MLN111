@@ -58,6 +58,7 @@ function useReadingProgress() {
 function App() {
   const [activeTab, setActiveTab] = useState('content');
   const [direction, setDirection] = useState('right');
+  const [tabKey, setTabKey]       = useState(0);
 
   const isFirstRender = useRef(true);
 
@@ -68,6 +69,7 @@ function App() {
     const ci = TAB_ORDER.indexOf(activeTab);
     const ni = TAB_ORDER.indexOf(newTab);
     setDirection(ni > ci ? 'right' : 'left');
+    setTabKey(k => k + 1);
     setActiveTab(newTab);
   };
 
@@ -92,10 +94,14 @@ function App() {
       <QuoteBlock />
       <Tabs activeTab={activeTab} setActiveTab={handleTabChange} />
 
-      <div key={activeTab} className={`panel-enter${direction === 'left' ? ' from-left' : ''}`}>
-        {activeTab === 'content' && <ContentPage />}
-        {activeTab === 'game'    && <GamePanel />}
-        {activeTab === 'ai'      && <ChatPanel />}
+      {activeTab !== 'game' && (
+        <div key={tabKey} className={`panel-enter${direction === 'left' ? ' from-left' : ''}`}>
+          {activeTab === 'content' && <ContentPage />}
+          {activeTab === 'ai'      && <ChatPanel />}
+        </div>
+      )}
+      <div style={{ display: activeTab === 'game' ? 'block' : 'none' }}>
+        <GamePanel />
       </div>
 
       <Footer />
