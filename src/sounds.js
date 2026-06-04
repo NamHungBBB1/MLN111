@@ -75,6 +75,7 @@ class SoundManager {
 
   pauseBg() {
     if (this.bgActive) try { this.bg.pause(); } catch (_) {}
+    if (this._sfx)     try { this._sfx.pause(); } catch (_) {}
   }
 
   resumeBg() {
