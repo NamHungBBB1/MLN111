@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { soundManager } from './sounds';
 import Hero from './components/Hero';
 import Tabs from './components/Tabs';
 import QuoteBlock from './components/QuoteBlock';
@@ -62,6 +63,8 @@ function App() {
 
   const handleTabChange = (newTab) => {
     if (newTab === activeTab) return;
+    if (activeTab === 'game') soundManager.pauseBg();
+    if (newTab === 'game')    soundManager.resumeBg();
     const ci = TAB_ORDER.indexOf(activeTab);
     const ni = TAB_ORDER.indexOf(newTab);
     setDirection(ni > ci ? 'right' : 'left');

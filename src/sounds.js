@@ -8,9 +8,10 @@ const URLS = {
 
 class SoundManager {
   constructor() {
-    this.muted = false;
-    this._ctx  = null;
-    this.bg    = new Audio(URLS.bg);
+    this.muted    = false;
+    this.bgActive = false; // true sau khi user bấm BẮT ĐẦU HÀNH TRÌNH
+    this._ctx     = null;
+    this.bg       = new Audio(URLS.bg);
     this.bg.loop   = true;
     this.bg.volume = 0.05;
     this.bg.preload = 'auto';
@@ -50,12 +51,22 @@ class SoundManager {
 
   startBg() {
     if (this.muted) return;
+    this.bgActive = true;
     this.bg.currentTime = 0;
     this.bg.play().catch(() => {});
   }
 
   stopBg() {
+    this.bgActive = false;
     try { this.bg.pause(); this.bg.currentTime = 0; } catch (_) {}
+  }
+
+  pauseBg() {
+    if (this.bgActive) try { this.bg.pause(); } catch (_) {}
+  }
+
+  resumeBg() {
+    if (this.bgActive && !this.muted) this.bg.play().catch(() => {});
   }
 
   toggle() {
