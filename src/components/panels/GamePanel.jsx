@@ -509,7 +509,6 @@ function EndingScreen({ stats, career, onRestart }) {
   const ending = ENDINGS.find(e => e.req(stats));
 
   useEffect(() => {
-    soundManager.stopBg();
     soundManager.play(ending.id === 'D' ? 'badEnding' : 'goodEnding');
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -586,6 +585,7 @@ export default function GamePanel() {
   };
 
   const handleCareerConfirm = (d, careerName) => {
+    soundManager.stopBg();
     applyDelta(d);
     setCareer(careerName);
     setScreen('ending');
