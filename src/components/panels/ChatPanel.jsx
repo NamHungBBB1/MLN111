@@ -1,6 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Groq from 'groq-sdk';
 import ReactMarkdown from 'react-markdown';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ChatPanel() {
   const [messages, setMessages] = useState([
@@ -13,7 +17,26 @@ export default function ChatPanel() {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [knowledge, setKnowledge] = useState('');
-  const logRef = useRef(null);
+  const logRef       = useRef(null);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Label: blade-slash from left
+      gsap.from('.section-label', {
+        x: -60, opacity: 0, duration: 0.65, ease: 'power3.out', delay: 0.1,
+      });
+      // Title: slam down
+      gsap.from('.section-title', {
+        y: 40, opacity: 0, skewX: 3, duration: 0.75, ease: 'power4.out', delay: 0.22,
+      });
+      // Chat terminal: rise + fade
+      gsap.from('.chat-terminal', {
+        y: 50, opacity: 0, scale: 0.97, duration: 0.7, ease: 'back.out(1.3)', delay: 0.38,
+      });
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
 
   useEffect(() => {
     fetch('/knowledge.md')
@@ -81,7 +104,7 @@ ${knowledge}`;
   ];
 
   return (
-    <div className="tab-panel">
+    <div className="tab-panel" ref={containerRef}>
       <div style={{ padding: '44px 36px 20px' }}>
         <div className="section-label">Phần 05 — Đối thoại thực</div>
         <h2 className="section-title">Hỏi đáp cùng AI</h2>
