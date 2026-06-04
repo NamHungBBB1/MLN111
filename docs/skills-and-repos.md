@@ -72,15 +72,45 @@ const screenAnim = {
 
 ---
 
+## Sound System
+
+### Kiến trúc (`src/sounds.js`)
+
+`SoundManager` singleton quản lý toàn bộ âm thanh. Các hành vi chính:
+
+| Hành động | Âm thanh |
+|---|---|
+| Click "BẮT ĐẦU HÀNH TRÌNH" | BG bắt đầu loop |
+| Click "CHỐT SỰ NGHIỆP" | BG dừng ngay |
+| Vào ending screen | Phát ending track tương ứng |
+| Chuyển tab | BG + SFX pause (resume khi quay lại) |
+| Bấm CHƠI LẠI | `stopAll()` — dừng tất cả |
+| Mọi nút bấm | Click sound (Web Audio API) |
+
+### Nguồn âm thanh
+
+**Background music — Local file**
+- File: `public/maestro.mp3` (TFT Set 10 — Maestro Theme, tải thủ công)
+- Volume: `0.05`, loop: `true`
+
+**Ending music — [incompetech.com](https://incompetech.com) (Kevin MacLeod, CC-BY)**
+
+| Ending | Track | Thời lượng | URL |
+|---|---|---|---|
+| Good (A/B/C) | *Achaidh Cheide* | 2m14s | `mp3-royaltyfree/Achaidh%20Cheide.mp3` |
+| Bad (D) | *Long Road Ahead* | 2m26s | `mp3-royaltyfree/Long%20Road%20Ahead.mp3` |
+
+Cả hai được **preload khi app khởi động** (`preload: 'auto'`) để phát ngay lập tức khi vào ending screen.
+
+**Button click — Web Audio API (generated, không cần file)**
+- Oscillator `sine`, sweep `680Hz → 260Hz`, duration `0.07s`
+
+---
+
 ## Repositories
 
 ### `Citedy/game-sounds`
 - **URL:** [github.com/Citedy/game-sounds](https://github.com/Citedy/game-sounds)
 - **CDN base:** `https://raw.githubusercontent.com/citedy/game-sounds/main/sounds/`
-- **Mô tả:** Bộ sưu tập âm thanh game/phim được phân loại theo sự kiện (session-start, task-complete, error, permission...) cho 70+ tựa game.
-- **Dùng để:** Âm thanh kết thúc trong mini game:
-
-| Sự kiện | File |
-|---|---|
-| Good ending (A/B/C) | `final-fantasy/task-acknowledge/finale.mp3` |
-| Bad ending (D) | `game-of-thrones/task-complete/rains-of-castamere.mp3` |
+- **Mô tả:** Bộ sưu tập âm thanh game/phim (70+ tựa) phân loại theo sự kiện.
+- **Dùng để:** Tham khảo và thử nghiệm trong quá trình phát triển; không còn dùng trực tiếp trong production.
