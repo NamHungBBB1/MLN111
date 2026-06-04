@@ -7,6 +7,12 @@
 - **Mô tả:** UI/UX design intelligence cho web và mobile. Bao gồm 50+ styles, 161 color palettes, 57 font pairings, 161 product types, 99 UX guidelines, và 25 chart types trên 10 tech stack.
 - **Dùng để:** Định hướng thiết kế tổng thể cho giao diện — tone Soviet Agitprop Broadside × Modern Editorial, lựa chọn typography (Oswald, Lora, JetBrains Mono, Playfair Display), hệ màu (đỏ cờ, cream, ink).
 
+### `gsap-scrolltrigger` · `motion-framer` · `animejs`
+- **Nguồn:** [freshtechbro/claudedesignskills](https://github.com/freshtechbro/claudedesignskills)
+- **Cài đặt:** `/plugin marketplace add freshtechbro/claudedesignskills` → `/plugin install gsap-scrolltrigger` · `/plugin install motion-framer`
+- **Mô tả:** Bộ 22 skills chuyên về animation và 3D cho web — GSAP, Framer Motion, Three.js, Anime.js, Vanta.js, Lottie...
+- **Dùng để:** Hướng dẫn implement GSAP ScrollTrigger (`ContentPage`, `ChatPanel`) và Framer Motion screen transitions (`GamePanel`).
+
 ---
 
 ## Color
