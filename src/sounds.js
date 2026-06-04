@@ -11,11 +11,21 @@ class SoundManager {
     this.muted    = false;
     this.bgActive = false;
     this._ctx     = null;
-    this._sfx     = null; // strong ref — prevents GC killing mid-play audio
-    this.bg       = new Audio(URLS.bg);
-    this.bg.loop   = true;
-    this.bg.volume = 0.05;
+    this._sfx     = null;
+
+    this.bg = new Audio(URLS.bg);
+    this.bg.loop    = true;
+    this.bg.volume  = 0.05;
     this.bg.preload = 'auto';
+
+    // Preload ending tracks so they play instantly
+    this._preloaded = {};
+    for (const name of ['goodEnding', 'badEnding']) {
+      const a = new Audio(URLS[name]);
+      a.preload = 'auto';
+      a.volume  = 0.2;
+      this._preloaded[name] = a;
+    }
   }
 
   _getCtx() {
@@ -44,11 +54,12 @@ class SoundManager {
   play(name) {
     if (this.muted || !URLS[name]) return;
     try {
-      if (this._sfx) { this._sfx.pause(); this._sfx = null; }
-      const a = new Audio(URLS[name]);
+      if (this._sfx) { this._sfx.pause(); this._sfx.currentTime = 0; }
+      const a = this._preloaded[name] ?? new Audio(URLS[name]);
       a.volume = 0.2;
+      a.currentTime = 0;
       a.play().catch(() => {});
-      this._sfx = a; // hold reference — prevents browser GC
+      this._sfx = a;
     } catch (_) {}
   }
 
