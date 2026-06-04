@@ -28,9 +28,9 @@ class SoundManager {
     this.bg.volume = 0.45;
 
     this._sfx = {
-      stageResult: this._load('final-fantasy/permission/item-received.mp3'),
+      stageResult: this._load('zelda/task-complete/secret-discovered.mp3'),
       goodEnding:  this._load('final-fantasy/task-acknowledge/finale.mp3'),
-      badEnding:   this._load('game-of-thrones/error/shame-bell.mp3'),
+      badEnding:   this._load('game-of-thrones/task-complete/rains-of-castamere.mp3'),
     };
   }
 
