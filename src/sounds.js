@@ -1,7 +1,7 @@
 const BASE = 'https://raw.githubusercontent.com/citedy/game-sounds/main/sounds';
 
 const URLS = {
-  bg:          'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Oppressive%20Gloom.mp3',
+  bg:          '/maestro.mp3',
   stageResult: `${BASE}/zelda/task-complete/secret-discovered.mp3`,
   goodEnding:  `${BASE}/final-fantasy/task-acknowledge/finale.mp3`,
   badEnding:   `${BASE}/game-of-thrones/task-complete/rains-of-castamere.mp3`,
