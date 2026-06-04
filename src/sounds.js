@@ -1,4 +1,4 @@
-const BASE = 'https://raw.githubusercontent.com/Citedy/game-sounds/main';
+const BASE = 'https://raw.githubusercontent.com/citedy/game-sounds/main/sounds';
 
 class SoundManager {
   constructor() {
@@ -18,7 +18,7 @@ class SoundManager {
 
   _load(path) {
     const a = new Audio(`${BASE}/${path}`);
-    a.preload = 'none';
+    a.preload = 'auto';
     return a;
   }
 
