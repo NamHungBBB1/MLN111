@@ -12,7 +12,7 @@ class SoundManager {
     this._ctx  = null;
     this.bg    = new Audio(URLS.bg);
     this.bg.loop   = true;
-    this.bg.volume = 0.2;
+    this.bg.volume = 0.08;
     this.bg.preload = 'auto';
   }
 
