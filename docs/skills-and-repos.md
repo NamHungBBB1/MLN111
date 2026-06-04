@@ -13,6 +13,15 @@
 - **Mô tả:** Bộ 22 skills chuyên về animation và 3D cho web — GSAP, Framer Motion, Three.js, Anime.js, Vanta.js, Lottie...
 - **Dùng để:** Implement GSAP ScrollTrigger (`ContentPage`, `ChatPanel`) và Framer Motion screen transitions (`GamePanel`).
 
+### Claude Cookbook — Frontend Aesthetics (Color)
+- **URL:** [platform.claude.com/cookbook/coding-prompting-for-frontend-aesthetics](https://platform.claude.com/cookbook/coding-prompting-for-frontend-aesthetics)
+- **Mô tả:** Hướng dẫn prompting cho thiết kế frontend — màu sắc, typography, aesthetic cohesion.
+- **Dùng để:** Định hướng hệ màu dự án theo các nguyên tắc:
+  - *Commit to a cohesive aesthetic* — dùng CSS variables thống nhất
+  - *Dominant colors with sharp accents* — cream/ink chiếm phần lớn, đỏ `#C8102E` chỉ ở điểm nhấn
+  - *Draw from cultural aesthetics* — lấy cảm hứng từ tờ báo tuyên truyền Liên Xô
+  - *Avoid evenly-distributed palettes* — không dùng gradient tím trên nền trắng
+
 ---
 
 ## Repositories
