@@ -23,9 +23,9 @@ class SoundManager {
   }
 
   _init() {
-    this.bg = this._load('game-of-thrones/session-start/theme.mp3');
+    this.bg = this._load('castlevania/session-start/prologue.mp3');
     this.bg.loop   = true;
-    this.bg.volume = 0.22;
+    this.bg.volume = 0.45;
 
     this._sfx = {
       stageResult: this._load('final-fantasy/permission/item-received.mp3'),
