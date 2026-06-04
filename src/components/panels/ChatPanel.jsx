@@ -83,12 +83,12 @@ ${knowledge}`;
   return (
     <div className="tab-panel">
       <div style={{ padding: '44px 36px 20px' }}>
-        <div className="section-label reveal">Phần 05 — Đối thoại thực</div>
-        <h2 className="section-title reveal rd1">Hỏi đáp cùng AI</h2>
+        <div className="section-label">Phần 05 — Đối thoại thực</div>
+        <h2 className="section-title">Hỏi đáp cùng AI</h2>
       </div>
 
       <div style={{ padding: '0 36px 44px' }}>
-        <div className="chat-terminal reveal rd2">
+        <div className="chat-terminal">
 
           {/* ── Header ── */}
           <div className="chat-terminal-header">
