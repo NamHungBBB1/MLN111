@@ -12,7 +12,7 @@ class SoundManager {
     this._ctx  = null;
     this.bg    = new Audio(URLS.bg);
     this.bg.loop   = true;
-    this.bg.volume = 0.08;
+    this.bg.volume = 0.05;
     this.bg.preload = 'auto';
   }
 
@@ -32,7 +32,7 @@ class SoundManager {
       osc.type = 'sine';
       osc.frequency.setValueAtTime(680, ctx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(260, ctx.currentTime + 0.07);
-      gain.gain.setValueAtTime(0.13, ctx.currentTime);
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.07);
       osc.start(ctx.currentTime);
       osc.stop(ctx.currentTime + 0.07);
@@ -43,7 +43,7 @@ class SoundManager {
     if (this.muted || !URLS[name]) return;
     try {
       const a = new Audio(URLS[name]);
-      a.volume = 0.6;
+      a.volume = 0.2;
       a.play().catch(() => {});
     } catch (_) {}
   }
