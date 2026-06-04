@@ -510,9 +510,7 @@ function EndingScreen({ stats, career, onRestart }) {
 
   useEffect(() => {
     soundManager.stopBg();
-    if (ending.id === 'D') soundManager.play('badEnding');
-    else if (ending.id === 'A') soundManager.play('goodEnding');
-    else soundManager.play('stageResult');
+    soundManager.play(ending.id === 'D' ? 'badEnding' : 'goodEnding');
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

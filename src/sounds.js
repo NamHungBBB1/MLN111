@@ -1,37 +1,25 @@
 const BASE = 'https://raw.githubusercontent.com/citedy/game-sounds/main/sounds';
 
+const URLS = {
+  bg:          `${BASE}/castlevania/session-start/prologue.mp3`,
+  stageResult: `${BASE}/zelda/task-complete/secret-discovered.mp3`,
+  goodEnding:  `${BASE}/final-fantasy/task-acknowledge/finale.mp3`,
+  badEnding:   `${BASE}/game-of-thrones/task-complete/rains-of-castamere.mp3`,
+};
+
 class SoundManager {
   constructor() {
     this.muted = false;
     this._ctx  = null;
-    this.bg    = null;
-    this._sfx  = {};
-    this._init();
+    this.bg    = new Audio(URLS.bg);
+    this.bg.loop   = true;
+    this.bg.volume = 0.45;
+    this.bg.preload = 'auto';
   }
 
   _getCtx() {
-    if (!this._ctx) {
-      this._ctx = new (window.AudioContext || window.webkitAudioContext)();
-    }
+    if (!this._ctx) this._ctx = new (window.AudioContext || window.webkitAudioContext)();
     return this._ctx;
-  }
-
-  _load(path) {
-    const a = new Audio(`${BASE}/${path}`);
-    a.preload = 'auto';
-    return a;
-  }
-
-  _init() {
-    this.bg = this._load('castlevania/session-start/prologue.mp3');
-    this.bg.loop   = true;
-    this.bg.volume = 0.45;
-
-    this._sfx = {
-      stageResult: this._load('zelda/task-complete/secret-discovered.mp3'),
-      goodEnding:  this._load('final-fantasy/task-acknowledge/finale.mp3'),
-      badEnding:   this._load('game-of-thrones/task-complete/rains-of-castamere.mp3'),
-    };
   }
 
   playClick() {
@@ -53,13 +41,11 @@ class SoundManager {
   }
 
   play(name) {
-    if (this.muted || !this._sfx[name]) return;
+    if (this.muted || !URLS[name]) return;
     try {
-      const audio = this._sfx[name];
-      audio.pause();
-      audio.currentTime = 0;
-      audio.volume = name === 'stageResult' ? 0.3 : 0.6;
-      audio.play().catch(() => {});
+      const a = new Audio(URLS[name]);
+      a.volume = name === 'stageResult' ? 0.3 : 0.6;
+      a.play().catch(() => {});
     } catch (_) {}
   }
 
