@@ -597,7 +597,6 @@ export default function GamePanel() {
     setStats(INIT_STATS);
     setDelta(null);
     setCareer(null);
-    soundManager.startBg();
   };
 
   const toggleMute = () => {
