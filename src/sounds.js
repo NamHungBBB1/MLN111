@@ -56,6 +56,11 @@ class SoundManager {
     if (this._sfx) { this._sfx.pause(); this._sfx = null; }
   }
 
+  stopAll() {
+    this.stopBg();
+    this.stopSfx();
+  }
+
   startBg() {
     if (this.muted) return;
     this.bgActive = true;

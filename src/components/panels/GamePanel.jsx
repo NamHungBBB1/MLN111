@@ -598,6 +598,7 @@ export default function GamePanel() {
   };
 
   const restart = () => {
+    soundManager.stopAll();
     setScreen('intro');
     setStageIdx(0);
     setStats(INIT_STATS);
