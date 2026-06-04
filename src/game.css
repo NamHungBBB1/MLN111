@@ -2,7 +2,20 @@
    MINI GAME — CHOOSE YOUR LIFE
    ============================================================ */
 
-.g-wrapper { padding: 36px; }
+.g-wrapper { padding: 36px; position: relative; }
+
+/* Mute toggle */
+.g-mute-btn {
+  position: absolute; top: 12px; right: 12px;
+  background: var(--ink); color: var(--cream);
+  border: 1px solid rgba(242,232,206,0.2);
+  border-radius: 50%; width: 36px; height: 36px;
+  font-size: 15px; cursor: pointer; z-index: 20;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+  line-height: 1;
+}
+.g-mute-btn:hover { background: var(--red); }
 
 /* Timeline */
 .g-timeline {
@@ -115,6 +128,18 @@
 .g-req-tag.unmet { color: var(--red); border-color: var(--red); }
 
 .g-locked-banner { background: rgba(200,16,46,0.1); border-left: 4px solid var(--red); padding: 12px 16px; margin-bottom: 16px; font-family: 'Lora', serif; font-size: 13.5px; line-height: 1.5; }
+
+/* Event requirement row */
+.g-event-req {
+  display: flex; flex-wrap: wrap; gap: 5px; align-items: center;
+  margin: 6px 0 8px; padding: 6px 0;
+  border-top: 1px dashed rgba(22,14,8,0.14);
+}
+.g-event-req-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink); opacity: 0.48; flex-shrink: 0; margin-right: 2px;
+}
 
 /* Events */
 .g-events-list { display: grid; gap: 14px; margin-bottom: 20px; }

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { soundManager } from '../../sounds';
 
 // ── CONFIG ────────────────────────────────────────────────
 const STATS_META = {
@@ -71,6 +72,7 @@ const WORLD_EVENTS = [
   {
     id:'e1', title:'COVID-19 — Đại dịch',
     desc:'Thế giới đóng cửa. Bạn có thích nghi được không?',
+    reqAll: [['tech', 8]],
     check: s => s.tech >= 8,
     okText: 'Công nghệ ≥ 8 → Học online thành công',
     noText: 'Công nghệ thấp → Bỏ lỡ năm học',
@@ -79,6 +81,7 @@ const WORLD_EVENTS = [
   {
     id:'e2', title:'AI Bùng Nổ',
     desc:'Trí tuệ nhân tạo thay đổi mọi ngành nghề.',
+    reqAll: [['tech', 18], ['mindset', 12]],
     check: s => s.tech >= 18 && s.mindset >= 12,
     okText: 'Công nghệ ≥ 18 + Tư duy ≥ 12 → Bắt kịp làn sóng AI',
     noText: 'Nền tảng chưa đủ → Khó thích nghi',
@@ -87,6 +90,7 @@ const WORLD_EVENTS = [
   {
     id:'e3', title:'Thực Tập Công Ty Lớn',
     desc:'Cơ hội thực tập tại tập đoàn mở ra.',
+    reqAny: [['social', 10], ['education', 15]],
     check: s => s.social >= 10 || s.education >= 15,
     okText: 'Quan hệ ≥ 10 hoặc Giáo dục ≥ 15 → Được nhận',
     noText: 'Không đủ điều kiện → Bỏ lỡ cơ hội',
@@ -251,7 +255,7 @@ function IntroScreen({ onStart }) {
           <div key={k} className="g-intro-stat-chip">{m.icon} {m.label}</div>
         ))}
       </div>
-      <button className="g-btn-primary" onClick={onStart}>
+      <button className="g-btn-primary" onClick={() => { soundManager.startBg(); onStart(); }}>
         BẮT ĐẦU HÀNH TRÌNH →
       </button>
     </div>
@@ -279,6 +283,7 @@ function StageScreen({ stage, stats, onConfirm }) {
     allFx.forEach(([k, v]) => { d[k] = (d[k] || 0) + v; });
     setDelta(d);
     setDone(true);
+    soundManager.play('stageResult');
   };
 
   return (
@@ -408,6 +413,28 @@ function EventsScreen({ stats, onConfirm }) {
             <div className="g-event-verdict">{r.pass ? '✓ VƯỢT QUA' : '✕ BỊ ẢNH HƯỞNG'}</div>
             <div className="g-event-title">{r.title}</div>
             <div className="g-event-desc">{r.desc}</div>
+            <div className="g-event-req">
+              {r.reqAll && (
+                <>
+                  <span className="g-event-req-label">YÊU CẦU (tất cả):</span>
+                  {r.reqAll.map(([k, v]) => (
+                    <span key={k} className={`g-req-tag ${stats[k] >= v ? 'met' : 'unmet'}`}>
+                      {STATS_META[k].label} ≥ {v} · có: {stats[k]}
+                    </span>
+                  ))}
+                </>
+              )}
+              {r.reqAny && (
+                <>
+                  <span className="g-event-req-label">CẦN ÍT NHẤT 1:</span>
+                  {r.reqAny.map(([k, v]) => (
+                    <span key={k} className={`g-req-tag ${stats[k] >= v ? 'met' : 'unmet'}`}>
+                      {STATS_META[k].label} ≥ {v} · có: {stats[k]}
+                    </span>
+                  ))}
+                </>
+              )}
+            </div>
             <div className="g-event-result">{r.pass ? r.okText : r.noText}</div>
             <div className="g-card-fx">
               {(r.pass ? r.okFx : r.noFx).map(([k, v]) => (
@@ -480,6 +507,14 @@ function CareerScreen({ stats, onConfirm }) {
 
 function EndingScreen({ stats, career, onRestart }) {
   const ending = ENDINGS.find(e => e.req(stats));
+
+  useEffect(() => {
+    soundManager.stopBg();
+    if (ending.id === 'D') soundManager.play('badEnding');
+    else if (ending.id === 'A') soundManager.play('goodEnding');
+    else soundManager.play('stageResult');
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <div className="g-ending">
       <div className="g-ending-label">KẾT THÚC · {ending.id}</div>
@@ -517,6 +552,16 @@ export default function GamePanel() {
   const [stats, setStats]         = useState(INIT_STATS);
   const [delta, setDelta]         = useState(null);
   const [career, setCareer]       = useState(null);
+  const [muted, setMuted]         = useState(false);
+  const wrapperRef                = useRef(null);
+
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    const handler = (e) => { if (e.target.closest('button')) soundManager.playClick(); };
+    el.addEventListener('click', handler, true);
+    return () => el.removeEventListener('click', handler, true);
+  }, []);
 
   const applyDelta = (d) => {
     setStats(prev => applyFx(prev, Object.entries(d)));
@@ -554,13 +599,22 @@ export default function GamePanel() {
     setStats(INIT_STATS);
     setDelta(null);
     setCareer(null);
+    soundManager.startBg();
+  };
+
+  const toggleMute = () => {
+    const nowMuted = soundManager.toggle();
+    setMuted(nowMuted);
   };
 
   const phaseForTimeline = screen === 'stage' ? 'stage' : screen;
 
   return (
     <div className="tab-panel">
-      <div className="g-wrapper">
+      <div className="g-wrapper" ref={wrapperRef}>
+        <button className="g-mute-btn" onClick={toggleMute} title={muted ? 'Bật nhạc' : 'Tắt nhạc'}>
+          {muted ? '🔇' : '🔊'}
+        </button>
         {screen !== 'intro' && screen !== 'ending' && (
           <>
             <Timeline phase={phaseForTimeline} stageIdx={stageIdx} />
