@@ -5,111 +5,13 @@
 ### `ui-ux-pro-max`
 - **Nguồn:** [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 - **Mô tả:** UI/UX design intelligence cho web và mobile. Bao gồm 50+ styles, 161 color palettes, 57 font pairings, 161 product types, 99 UX guidelines, và 25 chart types trên 10 tech stack.
-- **Dùng để:** Định hướng thiết kế tổng thể cho giao diện — tone Soviet Agitprop Broadside × Modern Editorial, lựa chọn typography (Oswald, Lora, JetBrains Mono, Playfair Display), hệ màu (đỏ cờ, cream, ink).
+- **Dùng để:** Định hướng thiết kế tổng thể — tone Soviet Agitprop Broadside × Modern Editorial, typography, hệ màu.
 
 ### `gsap-scrolltrigger` · `motion-framer` · `animejs`
 - **Nguồn:** [freshtechbro/claudedesignskills](https://github.com/freshtechbro/claudedesignskills)
 - **Cài đặt:** `/plugin marketplace add freshtechbro/claudedesignskills` → `/plugin install gsap-scrolltrigger` · `/plugin install motion-framer`
 - **Mô tả:** Bộ 22 skills chuyên về animation và 3D cho web — GSAP, Framer Motion, Three.js, Anime.js, Vanta.js, Lottie...
-- **Dùng để:** Hướng dẫn implement GSAP ScrollTrigger (`ContentPage`, `ChatPanel`) và Framer Motion screen transitions (`GamePanel`).
-
----
-
-## Color
-
-> Tham khảo: [Claude Cookbook — Coding & Prompting for Frontend Aesthetics](https://platform.claude.com/cookbook/coding-prompting-for-frontend-aesthetics)
-
-### Nguyên tắc áp dụng trong dự án
-
-- **Commit to a cohesive aesthetic** — Toàn bộ UI dùng một bộ CSS variables duy nhất, không pha trộn màu tuỳ tiện.
-- **Dominant colors with sharp accents** — Màu nền cream/ink chiếm phần lớn, đỏ (`#C8102E`) chỉ xuất hiện tại điểm nhấn (border, badge, accent) để tạo tương phản mạnh.
-- **Lấy cảm hứng từ cultural aesthetics** — Hệ màu mô phỏng tờ báo tuyên truyền Liên Xô (Soviet Agitprop Broadside): giấy cũ, mực in, đỏ cờ.
-- **Tránh palette phân bổ đều** — Không dùng màu gradient tím trên nền trắng; thay vào đó là contrast cao, in ấn, editorial.
-
-### CSS Variables (hệ màu thực tế)
-
-```css
---red:        #C8102E   /* Đỏ cờ — accent chính */
---red-dark:   #8B0A1F   /* Đỏ sậm — hover, border */
---red-faint:  rgba(200,16,46,0.07)
---cream:      #F2E8CE   /* Giấy cũ — nền card */
---cream-dark: #E2D3AE
---ink:        #160E08   /* Mực in — text, border */
---ink-mid:    rgba(22,14,8,0.5)
---ink-faint:  rgba(22,14,8,0.07)
---paper:      #EAE0C4   /* Giấy — nền section */
---paper-dark: #D8CAA4
---gold:       #A87810   /* Vàng — chi tiết phụ */
-```
-
----
-
-## Animation Libraries
-
-### GSAP + ScrollTrigger
-- **URL:** [gsap.com](https://gsap.com) · `npm install gsap`
-- **Dùng để:** Scroll-triggered entrance animations trong `ContentPage` và `ChatPanel`
-
-| Element | Animation |
-|---|---|
-| `.section-label` | Blade-slash từ trái (`x: -60, power3.out`) |
-| `.section-title` | Slam xuống + skew snap (`y: 45, skewX: 4, power4.out`) |
-| `.ghost-num` | Parallax scrub (`y: -90, scrub: 2`) |
-| `.concept-card` | Stagger rise (`y: 70, back.out(1.4), stagger: 0.18`) |
-| `.principle-box` | RotateY fan-in (`rotateY: 25, back.out(1.6), stagger: 0.14`) |
-| `.flow-diagram` | Slide unit từ trái + scale pop từng box |
-| `.evidence-item` | Blade-slash trái stagger (`x: -70, stagger: 0.1`) |
-| `.flash-wrap` | Cascade scale appear (`scale: 0.92, stagger: 0.07`) |
-
-### Framer Motion
-- **URL:** [framer.com/motion](https://www.framer.com/motion) · `npm install framer-motion`
-- **Dùng để:** Screen transitions trong `GamePanel` (mini game)
-- **Pattern:** `AnimatePresence mode="wait"` + `motion.div` bọc từng screen
-
-```js
-const screenAnim = {
-  initial: { opacity: 0, y: 28, scale: 0.97 },
-  animate: { opacity: 1, y: 0,  scale: 1,    transition: { duration: 0.38 } },
-  exit:    { opacity: 0, y: -20, scale: 0.97, transition: { duration: 0.22 } },
-};
-```
-
-Áp dụng cho: `intro → stage (×3) → path → events → career → ending`
-
----
-
-## Sound System
-
-### Kiến trúc (`src/sounds.js`)
-
-`SoundManager` singleton quản lý toàn bộ âm thanh. Các hành vi chính:
-
-| Hành động | Âm thanh |
-|---|---|
-| Click "BẮT ĐẦU HÀNH TRÌNH" | BG bắt đầu loop |
-| Click "CHỐT SỰ NGHIỆP" | BG dừng ngay |
-| Vào ending screen | Phát ending track tương ứng |
-| Chuyển tab | BG + SFX pause (resume khi quay lại) |
-| Bấm CHƠI LẠI | `stopAll()` — dừng tất cả |
-| Mọi nút bấm | Click sound (Web Audio API) |
-
-### Nguồn âm thanh
-
-**Background music — Local file**
-- File: `public/maestro.mp3` (TFT Set 10 — Maestro Theme, tải thủ công)
-- Volume: `0.05`, loop: `true`
-
-**Ending music — [incompetech.com](https://incompetech.com) (Kevin MacLeod, CC-BY)**
-
-| Ending | Track | Thời lượng | URL |
-|---|---|---|---|
-| Good (A/B/C) | *Achaidh Cheide* | 2m14s | `mp3-royaltyfree/Achaidh%20Cheide.mp3` |
-| Bad (D) | *Long Road Ahead* | 2m26s | `mp3-royaltyfree/Long%20Road%20Ahead.mp3` |
-
-Cả hai được **preload khi app khởi động** (`preload: 'auto'`) để phát ngay lập tức khi vào ending screen.
-
-**Button click — Web Audio API (generated, không cần file)**
-- Oscillator `sine`, sweep `680Hz → 260Hz`, duration `0.07s`
+- **Dùng để:** Implement GSAP ScrollTrigger (`ContentPage`, `ChatPanel`) và Framer Motion screen transitions (`GamePanel`).
 
 ---
 
@@ -120,3 +22,14 @@ Cả hai được **preload khi app khởi động** (`preload: 'auto'`) để p
 - **CDN base:** `https://raw.githubusercontent.com/citedy/game-sounds/main/sounds/`
 - **Mô tả:** Bộ sưu tập âm thanh game/phim (70+ tựa) phân loại theo sự kiện.
 - **Dùng để:** Tham khảo và thử nghiệm trong quá trình phát triển; không còn dùng trực tiếp trong production.
+
+### `incompetech.com` — Kevin MacLeod (CC-BY)
+- **URL:** [incompetech.com](https://incompetech.com)
+- **CDN base:** `https://incompetech.com/music/royalty-free/mp3-royaltyfree/`
+- **Mô tả:** Thư viện nhạc royalty-free CC-BY của Kevin MacLeod.
+- **Dùng để:** Ending music trong mini game:
+
+| Ending | Track | Thời lượng |
+|---|---|---|
+| Good (A/B/C) | *Achaidh Cheide* | 2m14s |
+| Bad (D) | *Long Road Ahead* | 2m26s |
