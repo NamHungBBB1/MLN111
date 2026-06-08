@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import Tabs from './components/Tabs';
 import QuoteBlock from './components/QuoteBlock';
 import Footer from './components/Footer';
+import IntegrityModal from './components/IntegrityModal';
 import ContentPage from './components/panels/ContentPage';
 import ChatPanel from './components/panels/ChatPanel';
 import GamePanel from './components/panels/GamePanel';
@@ -62,6 +63,7 @@ function App() {
         <div style={{ display: activeTab === 'game'    ? 'block' : 'none' }}><GamePanel /></div>
       </div>
 
+      <IntegrityModal />
       <Footer />
     </div>
   );

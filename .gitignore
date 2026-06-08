@@ -28,3 +28,6 @@ dist-ssr
 *.sln
 *.sw?
 .gstack/
+
+# Source documents (not for repo)
+*.docx

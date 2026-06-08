@@ -146,19 +146,22 @@ export default function ContentPage() {
           </div>
         </div>
 
-        <div className="section-label" style={{ marginTop: '32px' }}>Ba tính chất của ý thức xã hội</div>
-        <div className="principle-grid">
-          <div className="principle-box">
-            <div className="principle-num">01</div>
-            <div className="principle-text"><strong>Tính lạc hậu</strong> — ý thức cũ thường tồn tại lâu hơn tồn tại xã hội đã sinh ra nó.</div>
-          </div>
-          <div className="principle-box">
-            <div className="principle-num">02</div>
-            <div className="principle-text"><strong>Tính vượt trước</strong> — tư tưởng tiên tiến có thể đi trước, dự báo xu hướng phát triển.</div>
-          </div>
-          <div className="principle-box">
-            <div className="principle-num">03</div>
-            <div className="principle-text"><strong>Tính tác động trở lại</strong> — ý thức xã hội tác động ngược lên tồn tại xã hội, theo hai hướng.</div>
+        <div className="subsection">
+          <div className="section-label">Ba tính chất của ý thức xã hội</div>
+          <p className="subsection-note">Ba đặc điểm riêng của <strong>ý thức xã hội</strong> (thẻ bên phải) khi vận động cùng tồn tại xã hội.</p>
+          <div className="principle-grid">
+            <div className="principle-box">
+              <div className="principle-num">01</div>
+              <div className="principle-text"><strong>Tính lạc hậu</strong> — ý thức cũ thường tồn tại lâu hơn tồn tại xã hội đã sinh ra nó.</div>
+            </div>
+            <div className="principle-box">
+              <div className="principle-num">02</div>
+              <div className="principle-text"><strong>Tính vượt trước</strong> — tư tưởng tiên tiến có thể đi trước, dự báo xu hướng phát triển.</div>
+            </div>
+            <div className="principle-box">
+              <div className="principle-num">03</div>
+              <div className="principle-text"><strong>Tính tác động trở lại</strong> — ý thức xã hội tác động ngược lên tồn tại xã hội, theo hai hướng.</div>
+            </div>
           </div>
         </div>
       </div>
